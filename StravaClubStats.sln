@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StravaClubStatsShared", "St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StravaClubStatsBlazorServerApp", "StravaClubStatsBlazorServerApp\StravaClubStatsBlazorServerApp.csproj", "{DC53139A-CD1B-4FEB-8088-427ECFDD37A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewStravaClubRideConsoleApp", "NewStravaClubRideTester\NewStravaClubRideConsoleApp.csproj", "{D79EB567-E938-4FE4-8D2E-D5D72544B444}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DC53139A-CD1B-4FEB-8088-427ECFDD37A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC53139A-CD1B-4FEB-8088-427ECFDD37A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC53139A-CD1B-4FEB-8088-427ECFDD37A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D79EB567-E938-4FE4-8D2E-D5D72544B444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D79EB567-E938-4FE4-8D2E-D5D72544B444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D79EB567-E938-4FE4-8D2E-D5D72544B444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D79EB567-E938-4FE4-8D2E-D5D72544B444}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
