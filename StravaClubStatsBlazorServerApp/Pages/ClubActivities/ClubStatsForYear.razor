@@ -4,7 +4,7 @@
 
 <h1>Club Stats For Year</h1>
 
-@if (clubStatsForYear == null && !isInvalidClubStatsForYear)
+@if (!clubStatsForYear.Any() && !isInvalidClubStatsForYear)
 {
     <p><em>Loading...</em></p>
 }
@@ -25,10 +25,11 @@ else
             <PropertyColumn Property="x => x.Cyclist" Title="Cyclist" />
             <PropertyColumn Property="x => x.Rides" Title="Rides" />
             <PropertyColumn Property="x => x.Time" Title="Time" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.Distance)" Title="Distance (KMs)" SortBy="x => x.Distance" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.Distance)" CellStyleFunc="x => GetAverageDoneColour(x.Distance, x.DistanceTargetForCurrentWeek)" Title="Distance (KMs)" SortBy="x => x.Distance" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.ElevationGain)" Title="Elevation Gain (metres)" SortBy="x => x.ElevationGain" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceTarget)" Title="Distance Target (KMs)" SortBy="x => x.DistanceTarget" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceLeftToDo)" Title="Distance Left to Do (KMs)" SortBy="x => x.DistanceLeftToDo" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceTargetForCurrentWeek)" Title="Distance Target for Current Week (KMs)" SortBy="x => x.DistanceTargetForCurrentWeek" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceToDoPerWeek)" Title="Average Distance To Do Per Week (KMs)" SortBy="x => x.AverageDistanceToDoPerWeek" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceDonePerWeek)" CellStyleFunc="x => GetAverageDoneColour(x.AverageDistanceDonePerWeek, x.AverageDistanceToDoPerWeek)" Title="Average Distance Done Per Week (KMs)" SortBy="x => x.AverageDistanceDonePerWeek" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceLeftToDoPerWeek)" CellStyleFunc="x => GetAverageLeftToDoColour(x.AverageDistanceLeftToDoPerWeek, x.AverageDistanceToDoPerWeek)" Title="Average Distance Left To Do Per Week (KMs)" SortBy="x => x.AverageDistanceLeftToDoPerWeek" />

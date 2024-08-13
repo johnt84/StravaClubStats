@@ -5,13 +5,13 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
 
 public partial class ClubStatsForYear
 {
-    private List<StravaClubStatsForYear> clubStatsForYear = null;
+    private List<StravaClubStatsForYear> clubStatsForYear = new List<StravaClubStatsForYear>();
 
     private bool isInvalidClubStatsForYear = false;
 
-    private string errorMessage { get; set; }
+    private string errorMessage { get; set; } = string.Empty;
 
-    private string searchText;
+    private string searchText = string.Empty;
 
     private bool filterColumn(string columnName) =>
                             columnName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
@@ -56,8 +56,11 @@ public partial class ClubStatsForYear
         return false;
     };
 
+    private string GetDistanceDoneColour(decimal distance, decimal distanceTargetForCurrentWeek) =>
+        distance < distanceTargetForCurrentWeek ? "color:#FF0000" : "color:#000000";
+
     private string GetAverageDoneColour(decimal avaregeDonePerWeek, decimal averageToDoPerWeek) =>
-    avaregeDonePerWeek <= averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
+        avaregeDonePerWeek < averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
 
     private string GetAverageLeftToDoColour(decimal avaregeLeftToDoPerWeek, decimal averageToDoPerWeek) =>
         avaregeLeftToDoPerWeek > averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
@@ -76,7 +79,7 @@ public partial class ClubStatsForYear
         catch (Exception ex)
         {
             isInvalidClubStatsForYear = true;
-            errorMessage = $"Could not retrieve the club stats for the year";
+            errorMessage = $"Could not retrieve the club stats for the year - {ex.Message}";
         }
     }
 }

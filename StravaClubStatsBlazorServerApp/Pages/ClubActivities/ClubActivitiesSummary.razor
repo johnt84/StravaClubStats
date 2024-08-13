@@ -4,7 +4,7 @@
 
 <h1>Club Activities Summary</h1>
 
-@if (clubActivitiesSummaries == null  && !isInvalidClubActivities)
+@if (!clubActivitiesSummaries.Any()  && !isInvalidClubActivities)
 {
     <p><em>Loading...</em></p>
 }

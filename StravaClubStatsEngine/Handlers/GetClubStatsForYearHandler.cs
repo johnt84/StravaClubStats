@@ -7,7 +7,7 @@ namespace StravaClubStatsEngine.Handlers;
 
 public class GetClubStatsForYearHandler : IRequestHandler<GetClubStatsForYearQuery, List<StravaClubStatsForYear>>
 {
-    private readonly IStravaClubStatsForYearService _stravaClubStatsForYearService = null;
+    private readonly IStravaClubStatsForYearService _stravaClubStatsForYearService;
 
     public GetClubStatsForYearHandler(IStravaClubStatsForYearService stravaClubStatsForYearService)
     {

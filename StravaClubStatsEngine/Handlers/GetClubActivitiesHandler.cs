@@ -7,7 +7,7 @@ namespace StravaClubStatsEngine.Handlers;
 
 public class GetClubActivitiesHandler : IRequestHandler<GetClubActivitiesQuery, List<Activity>>
 {
-    private readonly IStravaClubStatsService _stravaClubStatsService = null;
+    private readonly IStravaClubStatsService _stravaClubStatsService;
 
     public GetClubActivitiesHandler(IStravaClubStatsService stravaClubStatsService)
     {

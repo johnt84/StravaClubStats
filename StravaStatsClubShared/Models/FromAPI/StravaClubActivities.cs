@@ -9,7 +9,7 @@ public class StravaClubActivities
     public int moving_time { get; set; }
     public int elapsed_time { get; set; }
     public float total_elevation_gain { get; set; }
-    public string type { get; set; }
+    public string type { get; set; } = string.Empty;
     public string sport_type { get; set; } = string.Empty;
     public int? workout_type { get; set; }
 }

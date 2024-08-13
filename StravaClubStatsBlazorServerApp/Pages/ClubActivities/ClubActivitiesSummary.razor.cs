@@ -5,13 +5,13 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
 
 public partial class ClubActivitiesSummary
 {
-    private List<ActivitiesSummary> clubActivitiesSummaries = null;
+    private List<ActivitiesSummary> clubActivitiesSummaries = new List<ActivitiesSummary>();
 
     private bool isInvalidClubActivities = false;
 
-    private string errorMessage { get; set; }
+    private string errorMessage { get; set; } = string.Empty;
 
-    private string searchText;
+    private string searchText = string.Empty;
 
     private bool filterColumn(string columnName) => 
                             columnName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
@@ -73,7 +73,7 @@ public partial class ClubActivitiesSummary
         catch (Exception ex)
         {
             isInvalidClubActivities = true;
-            errorMessage = $"Could not retrieve the club activities";
+            errorMessage = $"Could not retrieve the club activities - {ex.Message}";
         }
     }
 }

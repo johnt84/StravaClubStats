@@ -10,6 +10,7 @@ public class StravaClubStatsForYear
     public decimal ElevationGain { get; set; }
     public decimal DistanceTarget { get; set; }
     public decimal DistanceLeftToDo { get; set; }
+    public decimal DistanceTargetForCurrentWeek { get; set; }
     public decimal AverageDistanceToDoPerWeek { get; set; }
     public decimal AverageDistanceDonePerWeek { get; set; }
     public decimal AverageDistanceLeftToDoPerWeek { get; set; }
