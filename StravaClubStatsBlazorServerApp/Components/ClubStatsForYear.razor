@@ -12,30 +12,92 @@ else if (IsInvalidClubStatsForYear)
 }
 else
 {
-    <MudDataGrid T="StravaClubStatsForYear" MultiSelection="true" Items="ClubStatsForYears" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="quickFilter"
-                 Hideable="true">
-        <ToolBarContent>
-            <MudSpacer />
+    <FilterComponents @bind-Cyclist="@SearchText"
+                      Cyclists="Cyclists"
+                      IsSmall="IsSmall" />
+    
+    <MudTable T="StravaClubStatsForYear"
+                  Items="ClubStatsForYears" 
+                  Filter="quickFilter"
+                  Dense="true"
+                  Hover="true"
+                  Elevation="0"
+                  Breakpoint="Breakpoint.Xs">
+        <HeaderContent>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.Cyclist)">
+                    Cyclist
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.Rides)">
+                    Rides
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.Time)">
+                    Time
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.Distance)">
+                    Distance (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.ElevationGain)">
+                    Elevation Gain (metres)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.DistanceTarget)">
+                    Distance Target (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.DistanceLeftToDo)">
+                    Distance Left to Do (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.DistanceTargetForCurrentWeek)">
+                    Distance Target for Current Week (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.AverageDistanceToDoPerWeek)">
+                    Average Distance To Do Per Week (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.AverageDistanceDonePerWeek)">
+                    Average Distance Done Per Week (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+            <MudTd>
+                <MudTableSortLabel SortBy="new Func<StravaClubStatsForYear, object>(item => item.AverageDistanceLeftToDoPerWeek)">
+                    Average Distance Left To Do Per Week (KMs)
+                </MudTableSortLabel>
+            </MudTd>
+        </HeaderContent>
+         <RowTemplate Context="Item">
+            <MudTd>@Item.Cyclist</MudTd>
+            <MudTd>@Item.Rides</MudTd>
+            <MudTd>@Item.Time</MudTd>
+            <MudTd Class="x => ConvertTo2DecimalPlaces(x.Distance)">@ConvertTo2DecimalPlaces(Item.Distance)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.ElevationGain)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.DistanceTarget)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.DistanceLeftToDo)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.DistanceTargetForCurrentWeek)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.AverageDistanceToDoPerWeek)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.AverageDistanceDonePerWeek)</MudTd>
+            <MudTd>@ConvertTo2DecimalPlaces(Item.AverageDistanceLeftToDoPerWeek)</MudTd>
+        </RowTemplate>
 
-            <FilterComponents @bind-Cyclist="@SearchText"
-                              Cyclists="Cyclists"
-                              IsSmall="IsSmall" />
-
-        </ToolBarContent>
-        <Columns>
-            <PropertyColumn Property="x => x.Cyclist" Title="Cyclist" />
-            <PropertyColumn Property="x => x.Rides" Title="Rides" />
-            <PropertyColumn Property="x => x.Time" Title="Time" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.Distance)" CellStyleFunc="x => GetDoneColour(x.Distance, x.DistanceTarget, x.DistanceTargetForCurrentWeek)" Title="Distance (KMs)" SortBy="x => x.Distance" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.ElevationGain)" Title="Elevation Gain (metres)" SortBy="x => x.ElevationGain" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceTarget)" Title="Distance Target (KMs)" SortBy="x => x.DistanceTarget" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceLeftToDo)" Title="Distance Left to Do (KMs)" SortBy="x => x.DistanceLeftToDo" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceTargetForCurrentWeek)" Title="Distance Target for Current Week (KMs)" SortBy="x => x.DistanceTargetForCurrentWeek" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceToDoPerWeek)" Title="Average Distance To Do Per Week (KMs)" SortBy="x => x.AverageDistanceToDoPerWeek" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceDonePerWeek)" CellStyleFunc="x => GetAverageDoneColour(x.AverageDistanceDonePerWeek, x.AverageDistanceToDoPerWeek)" Title="Average Distance Done Per Week (KMs)" SortBy="x => x.AverageDistanceDonePerWeek" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceLeftToDoPerWeek)" CellStyleFunc="x => GetAverageLeftToDoColour(x.AverageDistanceLeftToDoPerWeek, x.AverageDistanceToDoPerWeek)" Title="Average Distance Left To Do Per Week (KMs)" SortBy="x => x.AverageDistanceLeftToDoPerWeek" />
-        </Columns>
-    </MudDataGrid>
+        <NoRecordsContent>
+            <MudText>No club stats</MudText>
+        </NoRecordsContent>
+    </MudTable>
 }
 
 <MediaQuery Media="@BlazorPro.BlazorSize.Breakpoints.SmallDown" @bind-Matches="IsSmall" />

@@ -94,6 +94,7 @@ public partial class ClubStatsForYear
     {
         await GetStravaClubStatsForYearAsync();
     }
+
     private async Task GetStravaClubStatsForYearAsync()
     {
         try
