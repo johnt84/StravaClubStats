@@ -1,10 +1,13 @@
-﻿using StravaClubStatsEngine.Queries;
+﻿using Microsoft.AspNetCore.Components;
 using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
 
 public partial class ClubActivitiesDrilldown
 {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = null!; 
+    
     private List<Activity> ClubActivities = new List<Activity>();
 
     private List<string> Cyclists = new List<string>();
@@ -49,16 +52,22 @@ public partial class ClubActivitiesDrilldown
         return false;
     };
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            ClubActivities = await Mediator.Send(new GetClubActivitiesQuery());
-        }
-        catch (Exception ex)
-        {
-            IsInvalidClubActivities = true;
-            ErrorMessage = $"Could not retrieve the club activities - {ex.Message}";
-        }
-    }
+
+    protected override void OnInitialized() =>
+        NavigationManager.NavigateTo("/");
+
+    // Removed access to the Summary and Drilldown pages as require a subscription to access the Strava API
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    try
+    //    {
+    //        ClubActivities = await Mediator.Send(new GetClubActivitiesQuery());
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        IsInvalidClubActivities = true;
+    //        ErrorMessage = $"Could not retrieve the club activities - {ex.Message}";
+    //    }
+    //}
 }

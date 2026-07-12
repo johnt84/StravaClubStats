@@ -1,10 +1,13 @@
-﻿using StravaClubStatsEngine.Queries;
+﻿using Microsoft.AspNetCore.Components;
 using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
 
 public partial class ClubActivitiesSummary
 {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = null!; 
+    
     private List<ActivitiesSummary> ClubActivitiesSummaries = new List<ActivitiesSummary>();
 
     private List<string> Cyclists = new List<string>();
@@ -63,34 +66,35 @@ public partial class ClubActivitiesSummary
         return false;
     };
 
-    protected override async Task OnInitializedAsync()
-    {
-        await GetAllClubActivitiesSummariesAsync();
-    }
+    protected override void OnInitialized() =>
+        NavigationManager.NavigateTo("/");
 
-    private async Task GetAllClubActivitiesSummariesAsync()
-    {
-        try
-        {
-            ClubActivitiesSummaries = await Mediator.Send(new GetClubActivitiesSummariesQuery());
 
-            Cyclists = ClubActivitiesSummaries
-                        .GroupBy(clubActivitySummary => clubActivitySummary.AthleteFirstName)
-                        .Select(cyclist => cyclist.Key)
-                        .OrderBy(cyclist => cyclist)
-                        .ToList();
+    // Removed access to the Summary and Drilldown pages as require a subscription to access the Strava API
 
-            if (IsSmall &&
-                string.IsNullOrEmpty(SearchText) &&
-                Cyclists.Any())
-            {
-                SearchText = Cyclists.First();
-            }
-        }
-        catch (Exception ex)
-        {
-            IsInvalidClubActivities = true;
-            ErrorMessage = $"Could not retrieve the club activities - {ex.Message}";
-        }
-    }
+    //private async Task GetAllClubActivitiesSummariesAsync()
+    //{
+    //    try
+    //    {
+    //        ClubActivitiesSummaries = await Mediator.Send(new GetClubActivitiesSummariesQuery());
+
+    //        Cyclists = ClubActivitiesSummaries
+    //                    .GroupBy(clubActivitySummary => clubActivitySummary.AthleteFirstName)
+    //                    .Select(cyclist => cyclist.Key)
+    //                    .OrderBy(cyclist => cyclist)
+    //                    .ToList();
+
+    //        if (IsSmall &&
+    //            string.IsNullOrEmpty(SearchText) &&
+    //            Cyclists.Any())
+    //        {
+    //            SearchText = Cyclists.First();
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        IsInvalidClubActivities = true;
+    //        ErrorMessage = $"Could not retrieve the club activities - {ex.Message}";
+    //    }
+    //}
 }
