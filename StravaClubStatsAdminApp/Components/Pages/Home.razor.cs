@@ -174,6 +174,8 @@ public partial class Home
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         public decimal ElevationGain { get; set; }
 
+        public decimal DistanceTarget { get; set; }
+
         public static ClubStatsForYearEditorModel FromDocument(ClubStatsForYear document) =>
             new()
             {
@@ -182,7 +184,8 @@ public partial class Home
                 Rides = ParseInt(document.rides),
                 Time = document.time,
                 Distance = ParseDecimal(document.distance),
-                ElevationGain = ParseDecimal(document.elevationgain),
+                ElevationGain = ParseDecimal(document.elevationgain ),
+                DistanceTarget = ParseDecimal(document.distancetarget),
             };
 
         public ClubStatsForYearEditorModel Clone() =>
@@ -194,6 +197,7 @@ public partial class Home
                 Time = Time,
                 Distance = Distance,
                 ElevationGain = ElevationGain,
+                DistanceTarget = DistanceTarget,
             };
 
         public ClubStatsForYear ToDocument() =>
@@ -205,6 +209,7 @@ public partial class Home
                 time = Time.Trim(),
                 distance = FormatDistance(Distance),
                 elevationgain = FormatElevationGain(ElevationGain),
+                distancetarget = FormatDistance(DistanceTarget),
             };
     }
 }

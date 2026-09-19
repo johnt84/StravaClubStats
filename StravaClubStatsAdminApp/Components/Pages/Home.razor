@@ -119,6 +119,16 @@ else
                                                 For="@(() => SelectedRecord.ElevationGain)"
                                                 @bind-Value="SelectedRecord.ElevationGain" />
 
+                            <MudNumericField T="decimal"
+                                             Label="Distance Target (KMs)"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0"
+                                             Immediate="true"
+                                             For="@(() => SelectedRecord.DistanceTarget)"
+                                             @bind-Value="SelectedRecord.DistanceTarget"
+                                             Disabled="true" />
+
                             <ValidationSummary />
 
                             <MudStack Row="true" Spacing="2">
