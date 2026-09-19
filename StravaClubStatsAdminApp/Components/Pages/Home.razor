@@ -1,0 +1,165 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Club Stats Admin</PageTitle>
+
+<h1>Club Stats For Year</h1>
+
+<p>View and update the Cosmos DB values used by the StravaClubStatsBlazorServerApp.</p>
+
+@if (IsLoading)
+{
+    <MudPaper Class="pa-6 d-flex justify-center">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    </MudPaper>
+}
+else if (!string.IsNullOrWhiteSpace(LoadErrorMessage))
+{
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled">@LoadErrorMessage</MudAlert>
+}
+else
+{
+    <MudGrid Spacing="3">
+        <MudItem xs="12" lg="8">
+            <MudPaper Class="pa-4">
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mb-4" Wrap="Wrap.Wrap">
+                    <MudTextField T="string"
+                                  Label="Search club stats"
+                                  Placeholder="Filter by cyclist or value"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  Immediate="true"
+                                  Adornment="Adornment.Start"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  @bind-Value="SearchText" />
+
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Disabled="IsLoading || IsSaving"
+                               OnClick="ReloadAsync">
+                        Refresh
+                    </MudButton>
+                </MudStack>
+
+                <MudDataGrid T="ClubStatsForYearEditorModel"
+                             Items="FilteredRecords"
+                             SortMode="SortMode.Multiple"
+                             Filterable="false"
+                             Hover="true"
+                             Dense="true">
+                    <Columns>
+                        <PropertyColumn Property="x => x.Cyclist" Title="Cyclist" />
+                        <PropertyColumn Property="x => x.Rides" Title="Rides" />
+                        <PropertyColumn Property="x => x.Time" Title="Time" />
+                        <PropertyColumn Property="x => x.Distance" Title="Distance (KMs)" />
+                        <PropertyColumn Property="x => x.ElevationGain" Title="Elevation Gain (metres)" />
+                        <PropertyColumn Property="x => x.DistanceTarget" Title="Distance Target (KMs)" />
+                        <TemplateColumn Title="Actions" Sortable="false">
+                            <CellTemplate>
+                                <MudButton Variant="Variant.Text"
+                                           Color="Color.Primary"
+                                           Size="Size.Small"
+                                           OnClick="@(() => BeginEdit(context.Item))">
+                                    Edit
+                                </MudButton>
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                </MudDataGrid>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" lg="4">
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6">@FormTitle</MudText>
+
+                @if (!string.IsNullOrWhiteSpace(SaveErrorMessage))
+                {
+                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="my-4">@SaveErrorMessage</MudAlert>
+                }
+
+                @if (SelectedRecord is null)
+                {
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-4">
+                        Select a row to edit its saved Cosmos DB values.
+                    </MudAlert>
+                }
+                else
+                {
+                    <EditForm Model="SelectedRecord" OnValidSubmit="SaveAsync">
+                        <DataAnnotationsValidator />
+
+                        <MudStack Class="mt-4" Spacing="2">
+                            <MudTextField T="string"
+                                          Label="Cyclist"
+                                          Variant="Variant.Outlined"
+                                          Margin="Margin.Dense"
+                                          For="@(() => SelectedRecord.Cyclist)"
+                                          @bind-Value="SelectedRecord.Cyclist" />
+
+                            <MudNumericField T="int"
+                                             Label="Rides"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0"
+                                             For="@(() => SelectedRecord.Rides)"
+                                             @bind-Value="SelectedRecord.Rides" />
+
+                            <MudTextField T="string"
+                                          Label="Time"
+                                          Variant="Variant.Outlined"
+                                          Margin="Margin.Dense"
+                                          For="@(() => SelectedRecord.Time)"
+                                          @bind-Value="SelectedRecord.Time" />
+
+                            <MudNumericField T="decimal"
+                                             Label="Distance (KMs)"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0"
+                                             Immediate="true"
+                                             For="@(() => SelectedRecord.Distance)"
+                                             @bind-Value="SelectedRecord.Distance" />
+
+                            <MudNumericField T="decimal"
+                                             Label="Elevation Gain (metres)"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0"
+                                             Immediate="true"
+                                             For="@(() => SelectedRecord.ElevationGain)"
+                                             @bind-Value="SelectedRecord.ElevationGain" />
+
+                            <MudNumericField T="decimal"
+                                             Label="Distance Target (KMs)"
+                                             Variant="Variant.Outlined"
+                                             Margin="Margin.Dense"
+                                             Min="0"
+                                             Immediate="true"
+                                             For="@(() => SelectedRecord.DistanceTarget)"
+                                             @bind-Value="SelectedRecord.DistanceTarget" />
+
+                            <ValidationSummary />
+
+                            <MudStack Row="true" Spacing="2">
+                                <MudButton ButtonType="ButtonType.Submit"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Disabled="IsSaving">
+                                    Save changes
+                                </MudButton>
+
+                                <MudButton Variant="Variant.Outlined"
+                                           Color="Color.Secondary"
+                                           Disabled="IsSaving"
+                                           OnClick="CancelEdit">
+                                    Reset
+                                </MudButton>
+                            </MudStack>
+                        </MudStack>
+                    </EditForm>
+                }
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
