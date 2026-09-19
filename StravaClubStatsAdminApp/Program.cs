@@ -6,6 +6,8 @@ using StravaClubStatsShared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 string GetRequiredConfiguration(string key) =>
     builder.Configuration[key] ?? throw new InvalidOperationException($"Missing configuration value '{key}'.");
 
@@ -31,6 +33,8 @@ builder.Services.AddSingleton(stravaClubStatsEngineInput);
 builder.Services.AddSingleton<ICosmosDbConnection, CosmosDbConnection>();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
