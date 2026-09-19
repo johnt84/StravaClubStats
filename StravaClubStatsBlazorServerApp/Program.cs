@@ -11,6 +11,9 @@ using StravaClubStatsShared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string GetRequiredConfiguration(string key) =>
+    builder.Configuration[key] ?? throw new InvalidOperationException($"Missing configuration value '{key}'.");
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -24,16 +27,16 @@ Int32.TryParse(builder.Configuration["NumberOfPages"], out int numberOfPages);
 
 var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
 {
-    StravaClubAPIUrl = builder.Configuration["StravaClubAPIUrl"],
+    StravaClubAPIUrl = GetRequiredConfiguration("StravaClubAPIUrl"),
     ClientID = clientID,
-    ClientSecret = builder.Configuration["ClientSecret"],
-    RefreshToken = builder.Configuration["RefreshToken"],
+    ClientSecret = GetRequiredConfiguration("ClientSecret"),
+    RefreshToken = GetRequiredConfiguration("RefreshToken"),
     ClubID = clubID,
     NumberOfPages = numberOfPages,
-    CosmosDbEndointUrl = builder.Configuration["CosmosDbEndpointUrl"],
-    CosmosDbPrimaryKey = builder.Configuration["CosmosDbPrimaryKey"],
-    CosmosDatabase = builder.Configuration["CosmosDatabase"],
-    CosmosPartitionKey = builder.Configuration["CosmosPartitionKey"],
+    CosmosDbEndointUrl = GetRequiredConfiguration("CosmosDbEndpointUrl"),
+    CosmosDbPrimaryKey = GetRequiredConfiguration("CosmosDbPrimaryKey"),
+    CosmosDatabase = GetRequiredConfiguration("CosmosDatabase"),
+    CosmosPartitionKey = GetRequiredConfiguration("CosmosPartitionKey"),
 };
 
 builder.Services.AddSingleton(stravaClubStatsEngineInput);

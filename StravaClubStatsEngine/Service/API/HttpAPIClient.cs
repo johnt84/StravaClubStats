@@ -14,7 +14,7 @@ public class HttpAPIClient : IHttpAPIClient
         _stravaClubStatsEngineInput = stravaClubStatsEngineInput;
         _Client = httpClient;
 
-        _Client.BaseAddress = new Uri(_stravaClubStatsEngineInput.StravaClubAPIUrl);
+        _Client.BaseAddress = new Uri(_stravaClubStatsEngineInput.StravaClubAPIUrl, UriKind.Absolute);
         _Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 

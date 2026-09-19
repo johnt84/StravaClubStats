@@ -24,11 +24,15 @@ public static class MauiProgram
             });
 
         var assembly = Assembly.GetExecutingAssembly();
-        using var stream = assembly.GetManifestResourceStream("StravaClubsStatsMauiApp.appsettings.json");
+        using var stream = assembly.GetManifestResourceStream("StravaClubsStatsMauiApp.appsettings.json")
+            ?? throw new InvalidOperationException("Missing embedded appsettings.json resource.");
 
         var config = new ConfigurationBuilder()
                     .AddJsonStream(stream)
                     .Build();
+
+        string GetRequiredConfiguration(string key) =>
+            config[key] ?? throw new InvalidOperationException($"Missing configuration value '{key}'.");
 
         builder.Services.AddMauiBlazorWebView();
 
@@ -45,16 +49,16 @@ public static class MauiProgram
 
         var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
         {
-            StravaClubAPIUrl = config["StravaClubAPIUrl"],
+            StravaClubAPIUrl = GetRequiredConfiguration("StravaClubAPIUrl"),
             ClientID = clientID,
-            ClientSecret = config["ClientSecret"],
-            RefreshToken = config["RefreshToken"],
+            ClientSecret = GetRequiredConfiguration("ClientSecret"),
+            RefreshToken = GetRequiredConfiguration("RefreshToken"),
             ClubID = clubID,
             NumberOfPages = numberOfPages,
-            CosmosDbEndointUrl = config["CosmosDbEndpointUrl"],
-            CosmosDbPrimaryKey = config["CosmosDbPrimaryKey"],
-            CosmosDatabase = config["CosmosDatabase"],
-            CosmosPartitionKey = config["CosmosPartitionKey"],
+            CosmosDbEndointUrl = GetRequiredConfiguration("CosmosDbEndpointUrl"),
+            CosmosDbPrimaryKey = GetRequiredConfiguration("CosmosDbPrimaryKey"),
+            CosmosDatabase = GetRequiredConfiguration("CosmosDatabase"),
+            CosmosPartitionKey = GetRequiredConfiguration("CosmosPartitionKey"),
         };
 
         builder.Services.AddSingleton(stravaClubStatsEngineInput);
