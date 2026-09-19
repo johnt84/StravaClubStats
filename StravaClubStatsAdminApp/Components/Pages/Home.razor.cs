@@ -86,9 +86,7 @@ public partial class Home
         }
 
         SaveErrorMessage = null;
-        SelectedRecord = Records
-            .Single(record => record.Id == SelectedRecord.Id)
-            .Clone();
+        SelectedRecord = null;
     }
 
     private async Task SaveAsync()
@@ -107,6 +105,8 @@ public partial class Home
             await LoadRecordsAsync(SelectedRecord.Id);
 
             Snackbar.Add($"Saved changes for {SelectedRecord.Cyclist}.", Severity.Success);
+
+            SelectedRecord = null;
         }
         catch (Exception ex)
         {
@@ -127,8 +127,7 @@ public partial class Home
             || record.Time.Contains(search, StringComparison.OrdinalIgnoreCase)
             || record.Rides.ToString(CultureInfo.InvariantCulture).Contains(search, StringComparison.OrdinalIgnoreCase)
             || record.Distance.ToString("0.##", CultureInfo.InvariantCulture).Contains(search, StringComparison.OrdinalIgnoreCase)
-            || record.ElevationGain.ToString("0.##", CultureInfo.InvariantCulture).Contains(search, StringComparison.OrdinalIgnoreCase)
-            || record.DistanceTarget.ToString("0.##", CultureInfo.InvariantCulture).Contains(search, StringComparison.OrdinalIgnoreCase);
+            || record.ElevationGain.ToString("0.##", CultureInfo.InvariantCulture).Contains(search, StringComparison.OrdinalIgnoreCase);
     }
 
     private static int ParseInt(string value) =>
@@ -175,9 +174,6 @@ public partial class Home
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         public decimal ElevationGain { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
-        public decimal DistanceTarget { get; set; }
-
         public static ClubStatsForYearEditorModel FromDocument(ClubStatsForYear document) =>
             new()
             {
@@ -187,7 +183,6 @@ public partial class Home
                 Time = document.time,
                 Distance = ParseDecimal(document.distance),
                 ElevationGain = ParseDecimal(document.elevationgain),
-                DistanceTarget = ParseDecimal(document.distancetarget),
             };
 
         public ClubStatsForYearEditorModel Clone() =>
@@ -199,7 +194,6 @@ public partial class Home
                 Time = Time,
                 Distance = Distance,
                 ElevationGain = ElevationGain,
-                DistanceTarget = DistanceTarget,
             };
 
         public ClubStatsForYear ToDocument() =>
@@ -211,7 +205,6 @@ public partial class Home
                 time = Time.Trim(),
                 distance = FormatDistance(Distance),
                 elevationgain = FormatElevationGain(ElevationGain),
-                distancetarget = FormatDistance(DistanceTarget),
             };
     }
 }

@@ -3,7 +3,7 @@
 
 <PageTitle>Club Stats Admin</PageTitle>
 
-<h1>Club Stats For Year Admin App</h1>
+<h2>Club Stats Admin App</h2>
 
 @if (IsLoading)
 {
@@ -51,7 +51,6 @@ else
                         <PropertyColumn Property="x => x.Time" Title="Time" />
                         <PropertyColumn Property="x => x.Distance" Title="Distance (KMs)" />
                         <PropertyColumn Property="x => x.ElevationGain" Title="Elevation Gain (metres)" />
-                        <PropertyColumn Property="x => x.DistanceTarget" Title="Distance Target (KMs)" />
                         <TemplateColumn Title="Actions" Sortable="false">
                             <CellTemplate>
                                 <MudButton Variant="Variant.Text"
@@ -120,16 +119,6 @@ else
                                                 For="@(() => SelectedRecord.ElevationGain)"
                                                 @bind-Value="SelectedRecord.ElevationGain" />
 
-                            <MudNumericField T="decimal"
-                                                Label="Distance Target (KMs)"
-                                                Variant="Variant.Outlined"
-                                                Margin="Margin.Dense"
-                                                Min="0"
-                                                Disabled="true"
-                                                Immediate="true"
-                                                For="@(() => SelectedRecord.DistanceTarget)"
-                                                @bind-Value="SelectedRecord.DistanceTarget" />
-
                             <ValidationSummary />
 
                             <MudStack Row="true" Spacing="2">
@@ -137,14 +126,14 @@ else
                                             Variant="Variant.Filled"
                                             Color="Color.Primary"
                                             Disabled="IsSaving">
-                                    Save changes
+                                    Save
                                 </MudButton>
 
                                 <MudButton Variant="Variant.Outlined"
                                             Color="Color.Secondary"
                                             Disabled="IsSaving"
                                             OnClick="CancelEdit">
-                                    Reset
+                                    Cancel
                                 </MudButton>
                             </MudStack>
                         </MudStack>
