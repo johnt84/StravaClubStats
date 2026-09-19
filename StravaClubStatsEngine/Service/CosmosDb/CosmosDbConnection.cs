@@ -9,15 +9,17 @@ namespace StravaClubStatsEngine.Service.CosmosDb;
 public class CosmosDbConnection : ICosmosDbConnection
 {
     private readonly StravaClubStatsEngineInput _stravaClubStatsEngineInput;
+    private readonly Func<Task<Container>> _containerFactory;
 
-    public CosmosDbConnection(StravaClubStatsEngineInput stravaClubStatsEngineInput)
+    public CosmosDbConnection(StravaClubStatsEngineInput stravaClubStatsEngineInput, Func<Task<Container>>? containerFactory = null)
     {
         _stravaClubStatsEngineInput = stravaClubStatsEngineInput;
+        _containerFactory = containerFactory ?? SetUpAsync;
     }
 
     public async Task<List<ClubStatsForYear>> QueryAsync()
     {
-        var container = await SetUpAsync();
+        var container = await _containerFactory();
 
         var sqlQueryText = $"SELECT * FROM c";
 
@@ -37,6 +39,15 @@ public class CosmosDbConnection : ICosmosDbConnection
         }
 
         return clubStatsForYear;
+    }
+
+    public async Task UpsertAsync(ClubStatsForYear clubStatsForYear)
+    {
+        ArgumentNullException.ThrowIfNull(clubStatsForYear);
+
+        var container = await _containerFactory();
+
+        await container.UpsertItemAsync(clubStatsForYear, new PartitionKey(clubStatsForYear.id));
     }
 
     private async Task<Container> SetUpAsync()
