@@ -82,12 +82,14 @@ public class StravaClubStatsService : IStravaClubStatsService
     private async Task<RefreshAPIToken> GetRefreshAPITokenAsync()
     {
         var response = await _httpAPIClient.PostAsync($"oauth/token?client_id={_stravaClubStatsEngineInput.ClientID}&client_secret={_stravaClubStatsEngineInput.ClientSecret}&grant_type=refresh_token&refresh_token={_stravaClubStatsEngineInput.RefreshToken}");
-        return await response.Content.ReadFromJsonAsync<RefreshAPIToken>();
+        return await response.Content.ReadFromJsonAsync<RefreshAPIToken>()
+            ?? throw new InvalidOperationException("Unable to deserialize the Strava refresh token response.");
     }
 
     private async Task<List<StravaClubActivities>> GetStravaClubActivitiesFromAPIAsync(RefreshAPIToken refreshAPIToken)
     {
         string json = await _httpAPIClient.GetAsync($"clubs/{_stravaClubStatsEngineInput.ClubID}/activities?per_page=200&access_token={refreshAPIToken.access_token}");
-        return JsonConvert.DeserializeObject<List<StravaClubActivities>>(json);
+        return JsonConvert.DeserializeObject<List<StravaClubActivities>>(json)
+            ?? throw new InvalidOperationException("Unable to deserialize the Strava club activities response.");
     }
 }

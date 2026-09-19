@@ -9,6 +9,9 @@ var builder = new ConfigurationBuilder()
 
 var config = builder.Build();
 
+string GetRequiredConfiguration(string key) =>
+    config[key] ?? throw new InvalidOperationException($"Missing configuration value '{key}'.");
+
 Int32.TryParse(config["ClientID"], out int clientID);
 
 Int32.TryParse(config["ClubID"], out int clubID);
@@ -17,17 +20,17 @@ Int32.TryParse(config["NumberOfPages"], out int numberOfPages);
 
 var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
 {
-    StravaClubAPIUrl = config["StravaClubAPIUrl"],
+    StravaClubAPIUrl = GetRequiredConfiguration("StravaClubAPIUrl"),
     ClientID = clientID,
-    ClientSecret = config["ClientSecret"],
-    RefreshToken = config["RefreshToken"],
+    ClientSecret = GetRequiredConfiguration("ClientSecret"),
+    RefreshToken = GetRequiredConfiguration("RefreshToken"),
     ClubID = clubID,
     NumberOfPages = numberOfPages,
 };
 
 var httpClient = new HttpClient();
 
-httpClient.BaseAddress = new Uri(config["StravaClubAPIUrl"]);
+httpClient.BaseAddress = new Uri(stravaClubStatsEngineInput.StravaClubAPIUrl, UriKind.Absolute);
 
 var httpAPIClient = new HttpAPIClient(httpClient, stravaClubStatsEngineInput);
 
