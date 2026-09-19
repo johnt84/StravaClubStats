@@ -3,9 +3,7 @@
 
 <PageTitle>Club Stats Admin</PageTitle>
 
-<h1>Club Stats For Year</h1>
-
-<p>View and update the Cosmos DB values used by the StravaClubStatsBlazorServerApp.</p>
+<h1>Club Stats For Year Admin App</h1>
 
 @if (IsLoading)
 {
@@ -69,97 +67,90 @@ else
             </MudPaper>
         </MudItem>
 
-        <MudItem xs="12" lg="4">
-            <MudPaper Class="pa-4">
-                <MudText Typo="Typo.h6">@FormTitle</MudText>
+        @if (SelectedRecord is not null)
+        {
+            <MudItem xs="12" lg="4">
+                <MudPaper Class="pa-4">
+                    @if (!string.IsNullOrWhiteSpace(SaveErrorMessage))
+                    {
+                        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="my-4">@SaveErrorMessage</MudAlert>
+                    }
 
-                @if (!string.IsNullOrWhiteSpace(SaveErrorMessage))
-                {
-                    <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" Class="my-4">@SaveErrorMessage</MudAlert>
-                }
-
-                @if (SelectedRecord is null)
-                {
-                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="mt-4">
-                        Select a row to edit its saved Cosmos DB values.
-                    </MudAlert>
-                }
-                else
-                {
                     <EditForm Model="SelectedRecord" OnValidSubmit="SaveAsync">
                         <DataAnnotationsValidator />
 
                         <MudStack Class="mt-4" Spacing="2">
                             <MudTextField T="string"
-                                          Label="Cyclist"
-                                          Variant="Variant.Outlined"
-                                          Margin="Margin.Dense"
-                                          For="@(() => SelectedRecord.Cyclist)"
-                                          @bind-Value="SelectedRecord.Cyclist" />
+                                            Label="Cyclist"
+                                            Variant="Variant.Outlined"
+                                            Margin="Margin.Dense"
+                                            For="@(() => SelectedRecord.Cyclist)"
+                                            @bind-Value="SelectedRecord.Cyclist" />
 
                             <MudNumericField T="int"
-                                             Label="Rides"
-                                             Variant="Variant.Outlined"
-                                             Margin="Margin.Dense"
-                                             Min="0"
-                                             For="@(() => SelectedRecord.Rides)"
-                                             @bind-Value="SelectedRecord.Rides" />
+                                                Label="Rides"
+                                                Variant="Variant.Outlined"
+                                                Margin="Margin.Dense"
+                                                Min="0"
+                                                For="@(() => SelectedRecord.Rides)"
+                                                @bind-Value="SelectedRecord.Rides" />
 
                             <MudTextField T="string"
-                                          Label="Time"
-                                          Variant="Variant.Outlined"
-                                          Margin="Margin.Dense"
-                                          For="@(() => SelectedRecord.Time)"
-                                          @bind-Value="SelectedRecord.Time" />
+                                            Label="Time"
+                                            Variant="Variant.Outlined"
+                                            Margin="Margin.Dense"
+                                            For="@(() => SelectedRecord.Time)"
+                                            @bind-Value="SelectedRecord.Time" />
 
                             <MudNumericField T="decimal"
-                                             Label="Distance (KMs)"
-                                             Variant="Variant.Outlined"
-                                             Margin="Margin.Dense"
-                                             Min="0"
-                                             Immediate="true"
-                                             For="@(() => SelectedRecord.Distance)"
-                                             @bind-Value="SelectedRecord.Distance" />
+                                                Label="Distance (KMs)"
+                                                Variant="Variant.Outlined"
+                                                Margin="Margin.Dense"
+                                                Min="0"
+                                                Immediate="true"
+                                                For="@(() => SelectedRecord.Distance)"
+                                                @bind-Value="SelectedRecord.Distance" />
 
                             <MudNumericField T="decimal"
-                                             Label="Elevation Gain (metres)"
-                                             Variant="Variant.Outlined"
-                                             Margin="Margin.Dense"
-                                             Min="0"
-                                             Immediate="true"
-                                             For="@(() => SelectedRecord.ElevationGain)"
-                                             @bind-Value="SelectedRecord.ElevationGain" />
+                                                Label="Elevation Gain (metres)"
+                                                Variant="Variant.Outlined"
+                                                Margin="Margin.Dense"
+                                                Min="0"
+                                                Immediate="true"
+                                                For="@(() => SelectedRecord.ElevationGain)"
+                                                @bind-Value="SelectedRecord.ElevationGain" />
 
                             <MudNumericField T="decimal"
-                                             Label="Distance Target (KMs)"
-                                             Variant="Variant.Outlined"
-                                             Margin="Margin.Dense"
-                                             Min="0"
-                                             Immediate="true"
-                                             For="@(() => SelectedRecord.DistanceTarget)"
-                                             @bind-Value="SelectedRecord.DistanceTarget" />
+                                                Label="Distance Target (KMs)"
+                                                Variant="Variant.Outlined"
+                                                Margin="Margin.Dense"
+                                                Min="0"
+                                                Disabled="true"
+                                                Immediate="true"
+                                                For="@(() => SelectedRecord.DistanceTarget)"
+                                                @bind-Value="SelectedRecord.DistanceTarget" />
 
                             <ValidationSummary />
 
                             <MudStack Row="true" Spacing="2">
                                 <MudButton ButtonType="ButtonType.Submit"
-                                           Variant="Variant.Filled"
-                                           Color="Color.Primary"
-                                           Disabled="IsSaving">
+                                            Variant="Variant.Filled"
+                                            Color="Color.Primary"
+                                            Disabled="IsSaving">
                                     Save changes
                                 </MudButton>
 
                                 <MudButton Variant="Variant.Outlined"
-                                           Color="Color.Secondary"
-                                           Disabled="IsSaving"
-                                           OnClick="CancelEdit">
+                                            Color="Color.Secondary"
+                                            Disabled="IsSaving"
+                                            OnClick="CancelEdit">
                                     Reset
                                 </MudButton>
                             </MudStack>
                         </MudStack>
                     </EditForm>
-                }
-            </MudPaper>
-        </MudItem>
+                </MudPaper>
+            </MudItem>
+        }
     </MudGrid>
 }

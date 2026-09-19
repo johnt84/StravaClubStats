@@ -32,10 +32,6 @@ public partial class Home
 
     private bool IsSaving { get; set; }
 
-    private string FormTitle => SelectedRecord is null
-        ? "Edit club stats"
-        : $"Editing {SelectedRecord.Cyclist}";
-
     private IEnumerable<ClubStatsForYearEditorModel> FilteredRecords =>
         string.IsNullOrWhiteSpace(SearchText)
             ? Records
