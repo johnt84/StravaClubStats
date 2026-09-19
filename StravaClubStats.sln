@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32616.157
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12210.168 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StravaClubStatsConsoleApp", "StravaClubStatsConsoleApp\StravaClubStatsConsoleApp.csproj", "{3E00333F-FAE0-4246-9EF7-E2E3D6446D53}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StravaClubStatsBlazorServerApp", "StravaClubStatsBlazorServerApp\StravaClubStatsBlazorServerApp.csproj", "{DC53139A-CD1B-4FEB-8088-427ECFDD37A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StravaClubsStatsMauiApp", "StravaClubsStatsMauiApp\StravaClubsStatsMauiApp.csproj", "{C212455B-70F8-4A1B-8979-E0A3306D51F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StravaClubStatsEngineUnitTests", "StravaClubStatsEngineUnitTests\StravaClubStatsEngineUnitTests.csproj", "{22701F8D-5201-4752-9A20-0DC8AFCE694F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{C212455B-70F8-4A1B-8979-E0A3306D51F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C212455B-70F8-4A1B-8979-E0A3306D51F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C212455B-70F8-4A1B-8979-E0A3306D51F1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{22701F8D-5201-4752-9A20-0DC8AFCE694F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22701F8D-5201-4752-9A20-0DC8AFCE694F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22701F8D-5201-4752-9A20-0DC8AFCE694F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22701F8D-5201-4752-9A20-0DC8AFCE694F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
