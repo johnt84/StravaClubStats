@@ -23,6 +23,7 @@ var stravaClubStatsEngineInput = new StravaClubStatsEngineInput
     CosmosDbPrimaryKey = GetRequiredConfiguration("CosmosDbPrimaryKey"),
     CosmosDatabase = GetRequiredConfiguration("CosmosDatabase"),
     CosmosPartitionKey = GetRequiredConfiguration("CosmosPartitionKey"),
+    AllowTargetUpdates = bool.TryParse(builder.Configuration["AllowTargetUpdates"], out var allowTargetUpdates) ? allowTargetUpdates : false
 };
 
 // Add services to the container.

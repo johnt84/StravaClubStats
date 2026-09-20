@@ -12,4 +12,5 @@ public class StravaClubStatsEngineInput
     public string CosmosDbPrimaryKey { get; set; } = string.Empty;
     public string CosmosDatabase { get; set; } = string.Empty;
     public string CosmosPartitionKey { get; set; } = string.Empty;
+    public bool AllowTargetUpdates { get; set; } = false;
 }

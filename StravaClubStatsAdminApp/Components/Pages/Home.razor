@@ -1,5 +1,10 @@
 ﻿@page "/"
+
 @rendermode InteractiveServer
+
+@using StravaClubStatsShared.Models
+
+@inject StravaClubStatsEngineInput StravaClubStatsEngineInput
 
 <PageTitle>Club Stats Admin</PageTitle>
 
@@ -127,7 +132,7 @@ else
                                              Immediate="true"
                                              For="@(() => SelectedRecord.DistanceTarget)"
                                              @bind-Value="SelectedRecord.DistanceTarget"
-                                             Disabled="true" />
+                                             Disabled="!StravaClubStatsEngineInput.AllowTargetUpdates" />
 
                             <ValidationSummary />
 
