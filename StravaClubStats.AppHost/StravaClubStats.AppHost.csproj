@@ -1,4 +1,4 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.5.4">
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.5.4">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,8 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Azure.Functions" Version="13.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\StravaClubStatsAdminApp\StravaClubStatsAdminApp.csproj" />
     <ProjectReference Include="..\StravaClubStatsBlazorServerApp\StravaClubStatsBlazorServerApp.csproj" />
+    <ProjectReference Include="..\StravaClubStatsSyncFunctionApp\StravaClubStatsSyncFunctionApp.csproj" />
   </ItemGroup>
 
 </Project>

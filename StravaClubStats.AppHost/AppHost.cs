@@ -4,4 +4,6 @@ builder.AddProject<Projects.StravaClubStatsBlazorServerApp>("stravaclubstatsblaz
 
 builder.AddProject<Projects.StravaClubStatsAdminApp>("stravaclubstatsadminapp");
 
+builder.AddAzureFunctionsProject<Projects.StravaClubStatsSyncFunctionApp>("stravaclubstatssyncfunctionapp");
+
 builder.Build().Run();
